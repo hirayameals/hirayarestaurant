@@ -1,0 +1,25 @@
+:root{
+--bg: #fffaf0;
+--accent: #c63b2a; /* warm red */
+--muted: #6b6b6b;
+--card: #ffffff;
+}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,'Helvetica Neue',Arial;color:#222;background:var(--bg);margin:0}
+.container{max-width:960px;margin:28px auto;padding:0 16px}
+.site-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:linear-gradient(90deg, rgba(198,59,42,0.06), rgba(198,59,42,0.03));border-bottom:1px solid rgba(0,0,0,0.04)}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo{width:64px;height:64px;object-fit:contain}
+.nav a{margin-left:12px;text-decoration:none;color:var(--accent)}
+.order-btn{font-weight:700}
+.intro h2{margin-top:8px}
+.gallery .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
+.gallery figure{background:var(--card);padding:8px;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.04);text-align:center}
+.gallery img{width:100%;height:140px;object-fit:cover;border-radius:6px}
+footer.site-footer{padding:18px;text-align:center;color:var(--muted);font-size:14px;margin-top:24px}
+form label{display:block;margin:8px 0}
+input,textarea,button{width:100%;padding:8px;border-radius:6px;border:1px solid #ddd}
+button{background:var(--accent);color:white;border:none;cursor:pointer;padding:10px 14px}
+.muted{color:var(--muted)}
+small{font-size:12px}
+@media(min-width:900px){.container{padding:0} .logo{width:80px;height:80px}}
