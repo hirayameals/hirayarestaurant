@@ -1,0 +1,84 @@
+<!doctype html>
+<section>
+<h2>Place an Order</h2>
+<p>Fill the form below. We'll send the order details to a Google Sheet.</p>
+
+
+<!-- NOTE: replace `YOUR_SCRIPT_URL` in the script below with your deployed Google Apps Script URL -->
+
+
+<form id="orderForm">
+<label>Name<br><input name="name" required></label>
+<label>Email<br><input type="email" name="email" required></label>
+<label>Phone<br><input name="phone" required value="55555"></label>
+
+
+<fieldset>
+<legend>Choose dishes (quantities)</legend>
+<label>Chicken Adobo <input name="chicken_adobo" type="number" min="0" value="0"></label>
+<label>Fish Sinigang <input name="fish_sinigang" type="number" min="0" value="0"></label>
+<label>Pinakbet <input name="pinakbet" type="number" min="0" value="0"></label>
+<label>Laing <input name="laing" type="number" min="0" value="0"></label>
+</fieldset>
+
+
+<label>Delivery address<br><textarea name="address" rows="3"></textarea></label>
+
+
+<button type="submit">Send order</button>
+
+
+<p id="status" class="muted"></p>
+</form>
+
+
+<p class="muted small">You will receive an email confirmation after we review your order.</p>
+</section>
+</main>
+
+
+<footer class="site-footer">
+<p>&copy; Hiraya</p>
+</footer>
+
+
+<script>
+// ========== CONFIG: put your Apps Script URL here (web app URL) ==========
+const SCRIPT_URL = 'YOUR_SCRIPT_URL'; // example: https://script.google.com/macros/s/AKfycbx.../exec
+// ======================================================================
+
+
+const form = document.getElementById('orderForm');
+const status = document.getElementById('status');
+
+
+form.addEventListener('submit', async (e) => {
+e.preventDefault();
+status.textContent = 'Sending...';
+
+
+const data = Object.fromEntries(new FormData(form).entries());
+data.timestamp = new Date().toISOString();
+
+
+try {
+const res = await fetch(SCRIPT_URL, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(data)
+});
+const result = await res.json();
+if (result && result.status === 'success') {
+status.textContent = 'Order sent — thank you! We will confirm by email.';
+form.reset();
+} else {
+throw new Error(result && result.message ? result.message : 'Unknown response');
+}
+} catch (err) {
+console.error(err);
+status.textContent = 'Failed to send order. Check script URL and permissions.';
+}
+});
+</script>
+</body>
+</html>
